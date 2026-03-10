@@ -5,6 +5,7 @@ import (
 	"order/config"
 	"order/internal/adapters/db"
 	"order/internal/adapters/grpc"
+	"order/internal/adapters/payment"
 	"order/internal/application/core/api"
 )
 
@@ -14,7 +15,12 @@ func main() {
 		log.Fatalf("failed to connect to database. Error: %v", err)
 	}
 
-	application := api.NewApplication(dbAdapter)
+	paymentAdapter, err := payment.NewAdapter(config.GetPaymentServiceUrl())
+	if err != nil {
+		log.Fatalf("failed to initialize payment stub. Error : %v", err)
+	}
+
+	application := api.NewApplication(dbAdapter, paymentAdapter)
 	grpcAdapter := grpc.NewAdapter(application, config.GetApplicationPort())
 	grpcAdapter.Run()
 }

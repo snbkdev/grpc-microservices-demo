@@ -1,11 +1,13 @@
 module order
 
 replace go_lang/order => ../../go_lang/order
+replace go_lang/payment => ../../go_lang/payment
 
 go 1.25.3
 
 require (
 	go_lang/order v0.0.0-00010101000000-000000000000
+	go_lang/payment v0.0.0-00010101000000-000000000000
 	google.golang.org/grpc v1.79.2
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/gorm v1.31.1
